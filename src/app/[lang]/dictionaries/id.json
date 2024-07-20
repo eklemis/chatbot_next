@@ -1,5 +1,18 @@
 {
 	"products": {
 		"cart": "Keranjang"
+	},
+	"assistant": {
+		"create_assistant": "Buat Asisten",
+		"title": "Asisten Baru",
+		"formDescription": "Buat asisten baru dengan spesifikasi model dan instruksi tertentu.",
+		"name": "Nama",
+		"model": "Model",
+		"description": "Deskripsi",
+		"instructions": "Instruksi",
+		"tools": "Tools"
+	},
+	"general": {
+		"create": "Buat"
 	}
 }

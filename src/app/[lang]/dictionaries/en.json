@@ -1,5 +1,18 @@
 {
 	"products": {
 		"cart": "Cart"
+	},
+	"assistant": {
+		"create_assistant": "Create Assistant",
+		"title": "New Assistant",
+		"formDescription": "Create an assistant with a model and instructions.",
+		"name": "Name",
+		"model": "Model",
+		"description": "Description",
+		"instructions": "Instructions",
+		"tools": "Tools"
+	},
+	"general": {
+		"create": "Create"
 	}
 }
