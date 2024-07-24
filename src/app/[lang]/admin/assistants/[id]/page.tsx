@@ -1,4 +1,5 @@
-import { getDictionary } from "../../dictionaries";
+// Serve View and Edit of an Assistant
+import { getDictionary } from "../../../dictionaries";
 import { Button } from "@/components/ui/button";
 import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
 
@@ -16,5 +17,5 @@ export default async function Page({
 		<Button>
 			<EnvelopeOpenIcon className="mr-2 h-4 w-4" /> {button_label}
 		</Button>
-	); // Add to Cart
+	);
 }

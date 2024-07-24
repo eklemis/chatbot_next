@@ -18,7 +18,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import Models from "@/lib/domain/models";
+import Models from "@/lib/assistant/domain/models";
 
 interface Model {
 	value: string;
