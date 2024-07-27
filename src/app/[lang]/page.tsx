@@ -13,5 +13,5 @@ export default async function Page({ params }: { params: { lang: string } }) {
 				<AssistantList />
 			</section>
 		</section>
-	); // Add to Cart
+	);
 }

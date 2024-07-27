@@ -1,4 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-  
+
+
+code{
+    display: inline-block;
+    color: green;
+    padding: 2px 6px;
+    background-color: rgb(234, 234, 234);
+    border-radius: 4px;
+}
+
+[class^="language-"]{
+    display: flex;
+    border-radius: 8px;
+    padding: 8px;
+    width: 100%;
+    overflow-x: scroll;
+    background-color: #222;
+    color: whitesmoke;
+    font-weight: normal;
+}

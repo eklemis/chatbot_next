@@ -30,8 +30,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "@/components/ui/use-toast";
 import { ComboboxModel } from "../../../../components/compounded/model-combobox";
 import Models from "@/lib/assistant/domain/models";
 import axios from "axios";

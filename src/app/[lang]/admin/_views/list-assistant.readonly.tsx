@@ -14,8 +14,10 @@ import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import { SkeletonCard } from "@/components/compounded/skeleton-card";
-import { Button } from "@/components/ui/button";
+
 axios.defaults.baseURL = process.env.BASE_PATH;
+
+import Link from "next/link";
 
 interface Assistant {
 	id: string;
@@ -28,6 +30,7 @@ interface Assistant {
 	top_p: number;
 	temperature: number;
 }
+
 export function AssistantList(dictionary: any) {
 	const dict = dictionary.dictionary;
 	const [assistants, setAssistants] = useState<Assistant[]>([]);
@@ -61,8 +64,8 @@ export function AssistantList(dictionary: any) {
 						>
 							<Card className="border w-46 h-full">
 								<CardContent className="p-0">
-									<Button
-										variant={"outline"}
+									<Link
+										href={"/interview/" + assistant.id}
 										className="w-full h-full flex flex-col aspect-square items-center justify-between p-4 gap-y-2 relative"
 									>
 										<Avatar className="w-20 h-20">
@@ -83,7 +86,7 @@ export function AssistantList(dictionary: any) {
 										<span className="text-sm text-gray-500 absolute bottom-2 mb-1">
 											{assistant.model}
 										</span>
-									</Button>
+									</Link>
 								</CardContent>
 							</Card>
 						</CarouselItem>

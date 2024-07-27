@@ -3,8 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 let locales = ["en", "id"];
 
 function getLocale(request: NextRequest) {
-	//console.log("Request:", request);
-	return "id";
+	return "en";
 }
 
 export function middleware(request: NextRequest) {
@@ -27,5 +26,14 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/:path*"],
+	matcher: [
+		/*
+		 * Match all request paths except for the ones starting with:
+		 * - api (API routes)
+		 * - _next/static (static files)
+		 * - _next/image (image optimization files)
+		 * - favicon.ico (favicon file)
+		 */
+		"/((?!api|_next/static|_next/image|favicon.ico).*)",
+	],
 };

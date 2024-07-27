@@ -1,23 +1,47 @@
-import { OpenAiCreateAndRunAdapter } from "@/lib/message/adapter/out/rest/openai_createandrun.adapter.out";
+import { OpenAiSendMessageAdapter } from "@/lib/message/adapter/out/rest/openai_sendmessage.adapter.out";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // defaults to auto
 
 type Params = {
 	assistant_id: string;
+	interview_id: string;
 };
+
+export async function POST(request: Request, context: { params: Params }) {
+	const assistant_id = context.params.assistant_id;
+	const interview_id = context.params.interview_id;
+
+	const messageObj = await request.json();
+	let message: string = messageObj.message;
+
+	console.log("assistant id:", assistant_id);
+	console.log("interview id:", interview_id);
+	console.log("message:", message);
+
+	const messanger = new OpenAiSendMessageAdapter();
+	try {
+		const createdMessage = await messanger.sendMessage(
+			interview_id,
+			message,
+			"user"
+		);
+
+		return NextResponse.json(createdMessage);
+	} catch (error) {
+		console.error("Error creating new message:", error);
+		return new Response("Error initiating new message", { status: 500 });
+	}
+}
 
 export async function GET(request: Request, context: { params: Params }) {
 	const assistant_id = context.params.assistant_id;
-	console.log("assistant id:", assistant_id);
+	const interview_id = context.params.interview_id;
 
-	const adapter = new OpenAiCreateAndRunAdapter();
-	const initialMessage = "Hi, I'm Litha the former staff that just resigned."; // You might want to get this from the request
+	const adapter = new OpenAiSendMessageAdapter();
 
 	try {
-		const stream = await adapter.initiateConversation(
-			assistant_id,
-			initialMessage
-		);
+		const stream = await adapter.getReplyStreamOf(assistant_id, interview_id);
 
 		// Transform the stream to include SSE formatting
 		const transformedStream = new ReadableStream({
@@ -58,7 +82,7 @@ export async function GET(request: Request, context: { params: Params }) {
 			},
 		});
 	} catch (error) {
-		console.error("Error initiating conversation:", error);
-		return new Response("Error initiating conversation", { status: 500 });
+		console.error("Error getting stream reply:", error);
+		return new Response("Error getting stream reply", { status: 500 });
 	}
 }
