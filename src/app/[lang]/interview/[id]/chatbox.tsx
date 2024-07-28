@@ -86,11 +86,11 @@ export function Chatbox({ assistantId, interviewId }: Params) {
 		}
 	}
 	return (
-		<section className="w-screen h-[calc(100vh-36px)] relative flex flex-col justify-center p-0 md:p-8 lg-p8 pt-2 pb-0">
+		<section className="w-screen h-[calc(100svh-46px)] relative flex flex-col justify-center p-0 md:p-8 lg-p8 pt-2 pb-0">
 			<div className=" h-full flex justify-center">
 				<ChatList chatList={messages} lastReply={reply.content} />
 			</div>
-			<div className="absolute items-end self-center bottom-0 flex flex-col bg-white z-50 gap-y-3 p-4 pb-2 w-full max-w-[1000px] shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+			<div className="absolute items-end self-center bottom-0 flex flex-col bg-slate-50 z-50 gap-y-3 p-4 pb-2 w-full max-w-[1000px] shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
 				<TextareaAutosize
 					className="border w-full p-2 rounded-md"
 					style={{ boxSizing: "border-box" }}

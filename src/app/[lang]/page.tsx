@@ -16,10 +16,10 @@ export default async function Page({ params }: { params: { lang: string } }) {
 					Admin
 				</Link>
 			</nav>
-			<section className="flex flex-col items-center justify-center p-2 gap-y-8 w-screen pb-8 h-screen">
+			<section className="flex flex-col items-center justify-center p-2 gap-y-8 w-screen pb-8 h-[calc(100svh-48px)] max-h-screen">
 				<h3 className=" text-gray-600 text-center">Welcome to Virtual HR</h3>
 				<h1 className=" text-6xl text-center">Who Do You Want to Talk With?</h1>
-				<section className="w-5/12">
+				<section className="w-full md:w-5/12 flex justify-center">
 					<AssistantList />
 				</section>
 			</section>

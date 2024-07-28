@@ -43,12 +43,12 @@ export default async function Page({
 }) {
 	const lang = params.lang;
 	const assistantId = params.id;
-	const assistantName = params.name;
+	const assistantName = decodeURIComponent(params.name);
 	const dict = await getDictionary(lang); // en
 	const interviewId = await getInterviewId();
 	return (
 		<>
-			<nav className="p-2 sticky top-0 bg-slate-50 z-50 flex justify-between">
+			<nav className="p-3 sticky top-0 bg-slate-100 z-50 flex justify-between">
 				<BreadcrumbWithCustomSeparator />
 				<div className=" text-sm text-gray-400">
 					<p>

@@ -35,6 +35,14 @@ export function AssistantList(dictionary: any) {
 	const dict = dictionary.dictionary;
 	const [assistants, setAssistants] = useState<Assistant[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
+	const imageList = [
+		"https://i.ibb.co.com/SKwpx5z/openart-assistant-6.jpg",
+		"https://i.ibb.co.com/zxSXs0q/openart-assistant-2.jpg",
+		"https://i.ibb.co.com/PNBTv9R/openart-assistant-1.jpg",
+		"https://i.ibb.co.com/Wc72vLP/openart-assistant-5.jpg",
+		"https://i.ibb.co.com/ftjn7JD/openart-assistant-4.jpg",
+		"https://i.ibb.co.com/h9SGvb4/openart-assistant-3.jpg",
+	];
 
 	useEffect(() => {
 		const fetchAssistants = async () => {
@@ -54,7 +62,7 @@ export function AssistantList(dictionary: any) {
 	}, []);
 
 	return (
-		<Carousel className="w-48 md:w-full">
+		<Carousel className="w-56 md:w-full">
 			{!loading && (
 				<CarouselContent className="-ml-2 gap-x-2 w-full md:w-11/12 lg:w-11/12">
 					{assistants.map((assistant, index) => (
@@ -71,7 +79,8 @@ export function AssistantList(dictionary: any) {
 										<div className="flex flex-col gap-y-2 items-center">
 											<Avatar className="w-20 h-20">
 												<AvatarImage
-													src="https://github.com/shadcn.png"
+													className="object-cover"
+													src={imageList[index]}
 													alt="@shadcn"
 												/>
 												<AvatarFallback>
