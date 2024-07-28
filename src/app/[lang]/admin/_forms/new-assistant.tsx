@@ -96,7 +96,7 @@ export function NewAssistantForm(dictionary: any) {
 					<PlusIcon className="mr-2 h-4 w-4" /> {button_label}
 				</Button>
 			</SheetTrigger>
-			<SheetContent className="w-1/3">
+			<SheetContent className="w-full md:w-2/3 lg:w-2/3">
 				<SheetHeader>
 					<SheetTitle>{form_title}</SheetTitle>
 					<SheetDescription>{form_description}</SheetDescription>

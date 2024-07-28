@@ -67,10 +67,10 @@ export function AssistantList(dictionary: any) {
 					{assistants.map((assistant, index) => (
 						<CarouselItem
 							key={index}
-							className="pl-1 md:basis-1/2 lg:basis-1/3"
+							className="pl-1 max-w-60 md:basis-1/2 lg:basis-1/3"
 						>
-							<Card className="p-1 border w-46 h-full">
-								<CardContent className="flex flex-col aspect-square items-center justify-between p-6 gap-y-2 relative">
+							<Card className="p-1 border h-full">
+								<CardContent className="flex flex-col gap-y-4 items-center justify-between p-4">
 									<DropdownMenu key={"dm-assistant-" + index}>
 										<DropdownMenuTrigger className="absolute h-6 right-2 top-0">
 											<DotsHorizontalIcon className=" text-gray-500" />
@@ -89,24 +89,31 @@ export function AssistantList(dictionary: any) {
 											</DropdownMenuItem>
 										</DropdownMenuContent>
 									</DropdownMenu>
-									<Avatar>
-										<AvatarImage
-											src="https://github.com/shadcn.png"
-											alt="@shadcn"
-										/>
-										<AvatarFallback>
-											{assistant.name.substring(0, 2).toUpperCase()}
-										</AvatarFallback>
-									</Avatar>
-									<span className="font-semibold text-gray-700 mt-2 text-center">
-										{assistant.name}
-									</span>
-									<span className="text-gray-500 font-semibold">
-										{assistant.description}
-									</span>
-									<span className="text-sm text-gray-500 absolute bottom-2 mb-1">
-										{assistant.model}
-									</span>
+									<div className="flex flex-col gap-y-2 items-center">
+										<Avatar className="w-20 h-20">
+											<AvatarImage
+												src="https://github.com/shadcn.png"
+												alt="@shadcn"
+											/>
+											<AvatarFallback>
+												{assistant.name.substring(0, 2).toUpperCase()}
+											</AvatarFallback>
+										</Avatar>
+										<span className="font-semibold text-gray-700 text-center">
+											{assistant.name}
+										</span>
+									</div>
+									<div className="w-full flex flex-col gap-y-2 min-h-24 max-w-60 rounded-sm border border-gray-400 p-2 shadow-[5px_5px_0px_0px_rgba(156,163,178)]">
+										<p className="text-sm text-gray-500 self-start">
+											Model:
+											<span className="font-bold text-gray-700">
+												{" " + assistant.model}
+											</span>
+										</p>
+										<span className="text-gray-500 text-sm">
+											{assistant.description ? assistant.description : "-"}
+										</span>
+									</div>
 								</CardContent>
 							</Card>
 						</CarouselItem>
