@@ -1,5 +1,5 @@
-import { getDictionary } from "../../dictionaries";
-import { Chatbox } from "./chatbox";
+import { getDictionary } from "../../../dictionaries";
+import { Chatbox } from "../chatbox";
 import setAxios from "@/lib/singletons/axios";
 import { Slash } from "lucide-react";
 
@@ -39,19 +39,20 @@ async function getInterviewId(): Promise<string> {
 export default async function Page({
 	params,
 }: {
-	params: { lang: string; id: string };
+	params: { lang: string; id: string; name: string };
 }) {
 	const lang = params.lang;
 	const assistantId = params.id;
+	const assistantName = params.name;
 	const dict = await getDictionary(lang); // en
 	const interviewId = await getInterviewId();
 	return (
 		<>
 			<nav className="p-2 sticky top-0 bg-slate-50 z-50 flex justify-between">
 				<BreadcrumbWithCustomSeparator />
-				<div className=" text-sm">
+				<div className=" text-sm text-gray-400">
 					<p>
-						Assistant <span className=" text-gray-500">{assistantId}</span>
+						Assistant: <span className=" text-gray-700">{assistantName}</span>
 					</p>
 				</div>
 			</nav>

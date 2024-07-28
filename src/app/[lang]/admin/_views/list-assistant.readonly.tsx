@@ -65,7 +65,7 @@ export function AssistantList(dictionary: any) {
 							<Card className="border h-full">
 								<CardContent className="p-0">
 									<Link
-										href={"/interview/" + assistant.id}
+										href={"/interview/" + assistant.id + "/" + assistant.name}
 										className="w-full h-full flex flex-col aspect-square items-center justify-between p-4 gap-y-2 relative"
 									>
 										<div className="flex flex-col gap-y-2 items-center">
