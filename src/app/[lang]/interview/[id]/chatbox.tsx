@@ -86,7 +86,7 @@ export function Chatbox({ assistantId, interviewId }: Params) {
 		}
 	}
 	return (
-		<section className="w-screen h-[calc(100vh-36px)] relative flex flex-col justify-center p-8 pt-2 pb-0">
+		<section className="w-screen h-[calc(100vh-36px)] relative flex flex-col justify-center p-0 md:p-8 lg-p8 pt-2 pb-0">
 			<div className=" h-full flex justify-center">
 				<ChatList chatList={messages} lastReply={reply.content} />
 			</div>
