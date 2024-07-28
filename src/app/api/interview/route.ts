@@ -1,9 +1,9 @@
-import { OpenAiCreateThreadAdapter } from "@/lib/message/adapter/out/rest/openai_createthread.adapter.out";
+import { CreateInterviewController } from "@/lib/interview/adapter/in/rest/create_interview.controller";
 
 export const dynamic = "force-dynamic"; // defaults to auto
 
 export async function GET() {
-	let interviewCreator = new OpenAiCreateThreadAdapter();
+	let interviewCreator = new CreateInterviewController();
 	let interviewObj = await interviewCreator.createInterviewSession();
 
 	return new Response(JSON.stringify({ interview_id: interviewObj.id }), {

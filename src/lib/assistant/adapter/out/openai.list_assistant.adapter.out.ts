@@ -1,5 +1,5 @@
 import { Assistant } from "../../domain/assistant";
-import { ListAssistantPort } from "../../application/port/in/list_assistant.port.in";
+import { ListAssistantPort } from "../../application/port/out/list_assistant.port.out";
 import { AssistantListParams } from "openai/resources/beta/assistants.mjs";
 import { aIAssistantsToAssistants } from "./openai.assistant.mapper";
 

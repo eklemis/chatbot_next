@@ -1,4 +1,4 @@
-import { ListAssistantUseCase } from "../../domain/list_assistant.usecase";
+import { ListAssistantUseCase } from "../../application/port/in/list_assistant.usecase";
 import { ListAssistantConfig } from "@/config/list_assistant.config";
 import { Assistant } from "../../domain/assistant";
 

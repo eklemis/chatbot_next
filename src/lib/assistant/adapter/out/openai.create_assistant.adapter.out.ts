@@ -1,4 +1,4 @@
-import { CreateAssistantPort } from "../../application/port/in/create_assistant.port.in";
+import { CreateAssistantPort } from "../../application/port/out/create_assistant.port.out";
 import { Assistant } from "../../domain/assistant";
 
 import OpenAI from "openai";

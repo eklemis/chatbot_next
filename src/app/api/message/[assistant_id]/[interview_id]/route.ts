@@ -1,4 +1,4 @@
-import { OpenAiSendMessageAdapter } from "@/lib/message/adapter/out/rest/openai_sendmessage.adapter.out";
+import { SendMessageController } from "@/lib/interview/adapter/in/rest/send_message.controller";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // defaults to auto
@@ -19,9 +19,9 @@ export async function POST(request: Request, context: { params: Params }) {
 	console.log("interview id:", interview_id);
 	console.log("message:", message);
 
-	const messanger = new OpenAiSendMessageAdapter();
+	const messanger = new SendMessageController();
 	try {
-		const createdMessage = await messanger.sendMessage(
+		const createdMessage = await messanger.putMessage(
 			interview_id,
 			message,
 			"user"
@@ -38,11 +38,10 @@ export async function GET(request: Request, context: { params: Params }) {
 	const assistant_id = context.params.assistant_id;
 	const interview_id = context.params.interview_id;
 
-	const adapter = new OpenAiSendMessageAdapter();
+	const adapter = new SendMessageController();
 
 	try {
-		const stream = await adapter.getReplyStreamOf(assistant_id, interview_id);
-
+		const stream = await adapter.fetchReplyStream(assistant_id, interview_id);
 		// Transform the stream to include SSE formatting
 		const transformedStream = new ReadableStream({
 			async start(controller) {

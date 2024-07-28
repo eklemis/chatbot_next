@@ -1,31 +1,33 @@
 import { Message } from "@/lib/interview/domain/message";
+import { SendMessagePort } from "@/lib/interview/application/port/out/send_message.port.out";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY,
 });
 
-export class OpenAiSendMessageAdapter {
+export class OpenAiSendMessageAdapter implements SendMessagePort {
 	async #createMessage(
-		interview_id: string,
+		thread_id: string,
 		message: string,
 		role: "user" | "assistant"
 	) {
-		console.log("Adding a new message to thread: " + interview_id);
-		const response = await openai.beta.threads.messages.create(interview_id, {
+		console.log("Adding a new OpenAI message to thread: " + thread_id);
+		const response = await openai.beta.threads.messages.create(thread_id, {
 			role: role,
 			content: message,
 		});
+		console.log("Created OpenAI message", response);
 		return response;
 	}
-	async #runAssistant(interview_id: string, assitant_id: string) {
-		console.log("Running assistant for thread: " + interview_id);
-		const response = await openai.beta.threads.runs.create(interview_id, {
+	async #runAssistant(thread_id: string, assitant_id: string) {
+		console.log("Running assistant for thread: " + thread_id);
+		const response = await openai.beta.threads.runs.create(thread_id, {
 			assistant_id: assitant_id,
 			stream: true,
 		});
 
-		console.log(response);
+		console.log("Created OpenAI run:", response);
 
 		return response;
 	}
@@ -41,7 +43,7 @@ export class OpenAiSendMessageAdapter {
 		};
 		return Promise.resolve(domainMessage);
 	}
-	async getReplyStreamOf(
+	async fetchReplyStream(
 		assistant_id: string,
 		interview_id: string
 	): Promise<ReadableStream> {
