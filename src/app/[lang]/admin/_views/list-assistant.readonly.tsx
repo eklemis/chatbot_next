@@ -54,13 +54,13 @@ export function AssistantList(dictionary: any) {
 	}, []);
 
 	return (
-		<Carousel className="w-full">
+		<Carousel className="w-48 md:w-full">
 			{!loading && (
-				<CarouselContent className="-ml-1 gap-x-2 w-11/12">
+				<CarouselContent className="-ml-2 gap-x-2 w-full md:w-11/12 lg:w-11/12">
 					{assistants.map((assistant, index) => (
 						<CarouselItem
 							key={index}
-							className="pl-1 md:basis-1/2 lg:basis-1/3"
+							className="pl-2 basis-48 md:basis-1/2 lg:basis-1/3"
 						>
 							<Card className="border h-full">
 								<CardContent className="p-0">
