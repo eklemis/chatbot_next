@@ -1,4 +1,4 @@
-import { Assistant } from "./assistant";
+import { Assistant } from "@/lib/assistant/domain/assistant";
 
 export interface ListAssistantUseCase {
 	listAssistant(
