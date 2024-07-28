@@ -78,7 +78,7 @@ export function AssistantList(dictionary: any) {
 							className="pl-1 max-w-60 md:basis-1/2 lg:basis-1/3"
 						>
 							<Card className="p-1 border h-full">
-								<CardContent className="flex flex-col gap-y-4 items-center justify-between p-4">
+								<CardContent className="flex flex-col gap-y-4 items-center justify-between p-4 relative">
 									<DropdownMenu key={"dm-assistant-" + index}>
 										<DropdownMenuTrigger className="absolute h-6 right-2 top-0">
 											<DotsHorizontalIcon className=" text-gray-500" />
