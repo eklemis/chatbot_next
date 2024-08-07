@@ -1,7 +1,6 @@
 import { getDictionary } from "./dictionaries";
 import { AssistantList } from "./admin/_views/list-assistant.readonly";
 import Link from "next/link";
-
 export default async function Page({ params }: { params: { lang: string } }) {
 	const lang = params.lang;
 	console.log("Lang:", lang);
