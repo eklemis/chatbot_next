@@ -1,6 +1,6 @@
-import { ListAssistantPort } from "../application/port/out/list_assistant.port.out";
-import { Assistant } from "./assistant";
-import { ListAssistantUseCase } from "../application/port/in/list_assistant.usecase";
+import { ListAssistantPort } from "./port/out/list_assistant.port.out";
+import { Assistant } from "../domain/assistant";
+import { ListAssistantUseCase } from "./port/in/list_assistant.usecase";
 
 export class ListAssistantService implements ListAssistantUseCase {
 	#listAssistantPort: ListAssistantPort;

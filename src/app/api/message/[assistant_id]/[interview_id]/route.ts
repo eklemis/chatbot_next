@@ -15,10 +15,6 @@ export async function POST(request: Request, context: { params: Params }) {
 	const messageObj = await request.json();
 	let message: string = messageObj.message;
 
-	console.log("assistant id:", assistant_id);
-	console.log("interview id:", interview_id);
-	console.log("message:", message);
-
 	const messanger = new SendMessageController();
 	try {
 		const createdMessage = await messanger.putMessage(

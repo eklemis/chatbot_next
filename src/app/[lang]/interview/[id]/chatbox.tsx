@@ -1,11 +1,11 @@
 "use client";
-import { Textarea } from "@/components/ui/textarea";
 import TextareaAutosize from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { useState, useEffect } from "react";
 import setAxios from "@/lib/singletons/axios";
 import { ChatList } from "./chat-list";
+import { SaveChatForm } from "./save-chat.form";
 interface Chat {
 	role: "assistant" | "user";
 	content: string;
@@ -28,6 +28,14 @@ export function Chatbox({ assistantId, interviewId }: Params) {
 			setMessages(efMessages);
 		}
 	}, [reply]);
+	let messageInitiated = false;
+	useEffect(() => {
+		// The first outosend message
+		if (!messageInitiated) {
+			sendMessage(interviewId, "Hello there!");
+			messageInitiated = true;
+		}
+	}, [messageInitiated]);
 
 	async function sendMessage(interview_id: string, message: string) {
 		try {
@@ -85,36 +93,68 @@ export function Chatbox({ assistantId, interviewId }: Params) {
 			console.error("Error sending message:", error);
 		}
 	}
+
+	const [showSaveForm, setShowSaveForm] = useState(false);
+	const [summaryContent, setSummaryContent] = useState("");
+	function saveHandler(content: string) {
+		//console.log("Save handler called:", content);
+		setSummaryContent(content);
+		setShowSaveForm(true);
+	}
 	return (
 		<section className="w-screen h-[calc(100svh-46px)] relative flex flex-col justify-center p-0 md:p-8 lg-p8 pt-2 pb-0">
-			<div className=" h-full flex justify-center">
-				<ChatList chatList={messages} lastReply={reply.content} />
-			</div>
-			<div className="absolute items-end self-center bottom-0 flex flex-col bg-slate-50 z-50 gap-y-3 p-4 pb-2 w-full max-w-[1000px] shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
-				<TextareaAutosize
-					className="border w-full p-2 rounded-md"
-					style={{ boxSizing: "border-box" }}
-					value={userMessage.content}
-					minRows={2}
-					maxRows={50}
-					onChange={(event) => {
-						setUserMessage((chat) => {
-							return {
-								...chat,
-								content: event.target.value,
-							};
-						});
+			{showSaveForm && (
+				<SaveChatForm
+					assistantId={assistantId}
+					assistantName="Any"
+					content={summaryContent}
+					onCancel={() => {
+						setShowSaveForm(false);
+						setSummaryContent("");
 					}}
 				/>
-				<Button
-					className="w-24"
-					onClick={() => {
-						sendMessage(interviewId, userMessage.content);
-					}}
-				>
-					<PaperPlaneIcon className="mr-2 h-4 w-4" /> Send
-				</Button>
-			</div>
+			)}
+			{!showSaveForm && (
+				<>
+					<div className="h-full flex justify-center">
+						<ChatList
+							chatList={
+								messages.filter(
+									(chat, idx) => idx > 0
+								) /* Filter out the first auto send message */
+							}
+							lastReply={reply.content}
+							onSave={saveHandler}
+						/>
+					</div>
+
+					<div className="absolute items-end self-center bottom-0 flex flex-col bg-slate-50 z-50 gap-y-3 p-4 pb-2 w-full max-w-[1000px] shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+						<TextareaAutosize
+							className="border w-full p-2 rounded-md"
+							style={{ boxSizing: "border-box" }}
+							value={userMessage.content}
+							minRows={2}
+							maxRows={50}
+							onChange={(event) => {
+								setUserMessage((chat) => {
+									return {
+										...chat,
+										content: event.target.value,
+									};
+								});
+							}}
+						/>
+						<Button
+							className="w-24"
+							onClick={() => {
+								sendMessage(interviewId, userMessage.content);
+							}}
+						>
+							<PaperPlaneIcon className="mr-2 h-4 w-4" /> Send
+						</Button>
+					</div>
+				</>
+			)}
 		</section>
 	);
 }

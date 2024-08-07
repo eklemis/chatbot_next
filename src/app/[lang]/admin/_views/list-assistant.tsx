@@ -25,6 +25,7 @@ import {
 	Pencil2Icon,
 } from "@radix-ui/react-icons";
 import { SkeletonCard } from "@/components/compounded/skeleton-card";
+import Link from "next/link";
 axios.defaults.baseURL = process.env.BASE_PATH;
 
 interface Assistant {
@@ -84,11 +85,25 @@ export function AssistantList(dictionary: any) {
 											<DotsHorizontalIcon className=" text-gray-500" />
 										</DropdownMenuTrigger>
 										<DropdownMenuContent>
-											<DropdownMenuItem>Open</DropdownMenuItem>
-											<DropdownMenuItem className="flex gap-x-1">
-												<Pencil2Icon /> <span>Edit</span>
+											<DropdownMenuItem>
+												<Link
+													href={"/admin/assistants/" + assistant.id}
+													className="flex w-full gap-x-2"
+												>
+													<span>Open</span>
+												</Link>
 											</DropdownMenuItem>
-											<DropdownMenuItem className="flex gap-x-1 text-red-700">
+											<DropdownMenuItem className="flex gap-x-1">
+												<Link
+													href={
+														"/admin/assistants/" + assistant.id + "?edit=true"
+													}
+													className="flex w-full gap-x-2"
+												>
+													<Pencil2Icon /> <span>Edit</span>
+												</Link>
+											</DropdownMenuItem>
+											<DropdownMenuItem className="flex gap-x-2 text-red-700">
 												<TrashIcon /> <span>Delete</span>
 											</DropdownMenuItem>
 											<DropdownMenuSeparator />

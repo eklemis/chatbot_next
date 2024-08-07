@@ -1,21 +1,45 @@
 // Serve View and Edit of an Assistant
 import { getDictionary } from "../../../dictionaries";
-import { Button } from "@/components/ui/button";
-import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
+import { EditAssistantForm } from "../../_forms/edit-assistant";
+import { ViewAssistant } from "../../_views/view-assistant";
+import { ChangeAssistantController } from "@/lib/assistant/adapter/in/change_assistant.controller";
+import { Assistant } from "@/lib/assistant/application/port/in/assistant";
+import { useSearchParams } from "next/navigation";
 
 export default async function Page({
 	params,
+	searchParams,
 }: {
 	params: { lang: string; id: string };
+	searchParams: { edit?: string };
 }) {
+	const isEditing = searchParams.edit === "true";
+
+	//console.log("isEditing:", isEditing);
+
 	const lang = params.lang;
 	const assistant_id = params.id;
 
 	const dict = await getDictionary(lang); // en
-	const button_label = dict.products.cart;
+	const assistantChangeController = new ChangeAssistantController();
+	const loadedAssistant: Assistant =
+		await assistantChangeController.loadAssistant(assistant_id);
+
 	return (
-		<Button>
-			<EnvelopeOpenIcon className="mr-2 h-4 w-4" /> {button_label}
-		</Button>
+		<section className="w-full p-0 md:p-8 flex flex-col items-center">
+			{isEditing ? (
+				<EditAssistantForm
+					dictionary={dict}
+					assistant={loadedAssistant}
+					assistant_id={assistant_id}
+				/>
+			) : (
+				<ViewAssistant
+					assistant_id={assistant_id}
+					dictionary={dict}
+					assistant={loadedAssistant}
+				/>
+			)}
+		</section>
 	);
 }
