@@ -4,7 +4,6 @@ import { EditAssistantForm } from "../../_forms/edit-assistant";
 import { ViewAssistant } from "../../_views/view-assistant";
 import { ChangeAssistantController } from "@/lib/assistant/adapter/in/change_assistant.controller";
 import { Assistant } from "@/lib/assistant/application/port/in/assistant";
-import { useSearchParams } from "next/navigation";
 
 export default async function Page({
 	params,
@@ -14,8 +13,6 @@ export default async function Page({
 	searchParams: { edit?: string };
 }) {
 	const isEditing = searchParams.edit === "true";
-
-	//console.log("isEditing:", isEditing);
 
 	const lang = params.lang;
 	const assistant_id = params.id;

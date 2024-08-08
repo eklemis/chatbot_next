@@ -8,14 +8,20 @@ import {
 	PaginationPrevious,
 } from "@/components/ui/pagination";
 import Link from "next/link";
-
-export function ListPagination() {
+import ReactMarkdown from "react-markdown";
+interface PagingParams {
+	curr_page: number;
+	total: number;
+}
+export function ListPagination({ curr_page, total }: PagingParams) {
+	const PER_PAGE = 10;
 	return (
 		<Pagination>
 			<PaginationContent>
 				<PaginationItem>
 					<PaginationPrevious href="#" />
 				</PaginationItem>
+
 				<PaginationItem>
 					<PaginationLink href="#">1</PaginationLink>
 				</PaginationItem>
@@ -40,8 +46,15 @@ export function ListPagination() {
 interface Params {
 	dictionary: any;
 	interviewList: any[];
+	currPage: number;
+	totalPage: number;
 }
-export function SummaryList({ dictionary, interviewList }: Params) {
+export function SummaryList({
+	dictionary,
+	interviewList,
+	currPage,
+	totalPage,
+}: Params) {
 	const dict = dictionary.dictionary;
 	return (
 		<section className="">
@@ -50,20 +63,26 @@ export function SummaryList({ dictionary, interviewList }: Params) {
 				{interviewList.map((list, idx) => {
 					return (
 						<li
-							className="flex relative p-2 rounded overflow-clip bg-slate-50 items-center justify-center text-center w-52 max-w-52 h-40 max-h-40 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]"
+							className="p-6 rounded-md overflow-clip bg-gradient-to-br to-amber-50 via-rose-50 from-white items-between w-64 max-w-64 h-44 max-h-44 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]"
 							key={"IS-" + idx}
 						>
-							<Link href="#">{list.title}</Link>
-							<div className="absolute flex items-center justify-center bottom-0 h-7 bg-slate-200 w-full">
-								<p className="text-[8px] text-slate-500 text-center">
-									{list.assistantId}
+							<Link
+								className=" h-full w-full flex flex-col gap-y-2"
+								href={"/admin/summaries/" + list.id}
+							>
+								<h3 className="text-sm font-bold text-grey-700 flex h-11 min-h-11 line-clamp-2">
+									{list.title}
+								</h3>
+
+								<p className="text-[12px] line-clamp-4 text-gray-600">
+									<ReactMarkdown>{list.summary}</ReactMarkdown>
 								</p>
-							</div>
+							</Link>
 						</li>
 					);
 				})}
 			</ul>
-			<ListPagination />
+			{/* <ListPagination curr_page={currPage} total={totalPage} /> */}
 		</section>
 	);
 }

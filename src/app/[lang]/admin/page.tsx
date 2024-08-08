@@ -11,6 +11,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
 	const dict = await getDictionary(lang);
 	const inteviewLister = new PrismaListInterview();
 	const interviewRows = await inteviewLister.load(0, 10);
+	const totalRows = await inteviewLister.getCountAll();
 
 	return (
 		<div className="flex flex-col gap-y-8">
@@ -18,7 +19,12 @@ export default async function Page({ params }: { params: { lang: string } }) {
 				<AssistantList dictionary={dict} />
 				<NewAssistantForm dictionary={dict} />
 			</section>
-			<SummaryList dictionary={dict} interviewList={interviewRows} />
+			<SummaryList
+				currPage={1}
+				totalPage={totalRows}
+				dictionary={dict}
+				interviewList={interviewRows}
+			/>
 		</div>
 	);
 }

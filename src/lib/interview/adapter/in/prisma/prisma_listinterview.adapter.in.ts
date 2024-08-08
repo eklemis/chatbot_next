@@ -10,4 +10,7 @@ export class PrismaListInterview {
 		});
 		return result;
 	}
+	async getCountAll(): Promise<number> {
+		return prisma.interviewSummary.count();
+	}
 }
