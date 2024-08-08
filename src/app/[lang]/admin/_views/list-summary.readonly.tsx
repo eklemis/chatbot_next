@@ -57,9 +57,9 @@ export function SummaryList({
 }: Params) {
 	const dict = dictionary.dictionary;
 	return (
-		<section className="">
+		<section className="w-full flex flex-col items-center justify-center mt-16">
 			<h2 className="text-2xl font-bold">Interview Summaries</h2>
-			<ul className="flex gap-4 p-4 px-0 w-full items-center justify-center">
+			<ul className="flex gap-4 p-4 px-0 w-full max-w-7xl flex-wrap items-center justify-center mt-4">
 				{interviewList.map((list, idx) => {
 					return (
 						<li

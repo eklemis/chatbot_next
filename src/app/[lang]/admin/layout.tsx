@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/breadcrumb";
 function BreadcrumbWithCustomSeparator() {
 	return (
-		<Breadcrumb>
+		<Breadcrumb className="z-50">
 			<BreadcrumbList>
 				<BreadcrumbItem>
 					<BreadcrumbLink href="/">Home</BreadcrumbLink>

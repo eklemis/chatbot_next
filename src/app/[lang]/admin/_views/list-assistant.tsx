@@ -70,7 +70,7 @@ export function AssistantList(dictionary: any) {
 	}, []);
 
 	return (
-		<Carousel className="w-full">
+		<Carousel className="w-fit flex items-center justify-center -z-10">
 			{!loading && (
 				<CarouselContent className="-ml-1 gap-x-2 w-11/12">
 					{assistants.map((assistant, index) => (
