@@ -26,6 +26,22 @@ export default async function Page({ params }: { params: { lang: string } }) {
 							<CheckCircle2 className="min-w-5 min-h-5 w-5 h-5 text-green-600" />
 							Assistant provide summary
 						</li>
+						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
+							<CheckCircle2 className="min-w-5 min-h-5 w-5 h-5 text-green-600" />
+							Save interview summary result
+						</li>
+						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
+							<CheckCircle2 className="min-w-5 min-h-5 w-5 h-5 text-green-600" />
+							Listing interview results
+						</li>
+						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
+							<CheckCircle2 className="min-w-5 min-h-5 w-5 h-5 text-green-600" />
+							Change Assistants
+						</li>
+						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
+							<CheckCircle2 className="min-w-5 min-h-5 w-5 h-5 text-green-600" />
+							Autostart conversation by AI Assistant
+						</li>
 					</ul>
 				</section>
 				<section className="flex flex-col gap-y-2 p-8 rounded w-full bg-gray-50 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]">
@@ -33,15 +49,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
 					<ul className="flex flex-col gap-y-1">
 						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
 							<Circle className="min-w-5 min-h-5 w-5 h-5 text-gray-500" />
-							Save interview summary result
-						</li>
-						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
-							<Circle className="min-w-5 min-h-5 w-5 h-5 text-gray-500" />
-							Listing interview results
-						</li>
-						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
-							<Circle className="min-w-5 min-h-5 w-5 h-5 text-gray-500" />
-							Change and Delete Assistants
+							Delete Assistants
 						</li>
 						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
 							<Circle className="min-w-5 min-h-5 w-5 h-5 text-gray-500" />
