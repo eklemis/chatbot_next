@@ -1,3 +1,4 @@
+"use client";
 import {
 	Pagination,
 	PaginationContent,
@@ -9,6 +10,11 @@ import {
 } from "@/components/ui/pagination";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import setAxios from "@/lib/singletons/axios";
+import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonCard } from "@/components/compounded/skeleton-card";
+
 interface PagingParams {
 	curr_page: number;
 	total: number;
@@ -45,44 +51,67 @@ export function ListPagination({ curr_page, total }: PagingParams) {
 }
 interface Params {
 	dictionary: any;
-	interviewList: any[];
 	currPage: number;
 	totalPage: number;
 }
-export function SummaryList({
-	dictionary,
-	interviewList,
-	currPage,
-	totalPage,
-}: Params) {
+interface Summary {
+	id: string;
+	assistantId: string;
+	userId: string;
+	title: string;
+	summary: string;
+}
+export function SummaryList({ dictionary, currPage, totalPage }: Params) {
 	const dict = dictionary.dictionary;
-	return (
-		<section className="w-full flex flex-col items-center justify-center mt-16">
-			<h2 className="text-2xl font-bold">Interview Summaries</h2>
-			<ul className="flex gap-4 p-4 px-0 w-full max-w-7xl flex-wrap items-center justify-center mt-4">
-				{interviewList.map((list, idx) => {
-					return (
-						<li
-							className="p-6 rounded-md overflow-clip bg-gradient-to-br to-amber-50 via-rose-50 from-white items-between w-64 max-w-64 h-44 max-h-44 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]"
-							key={"IS-" + idx}
-						>
-							<Link
-								className=" h-full w-full flex flex-col gap-y-2"
-								href={"/admin/summaries/" + list.id}
-							>
-								<h3 className="text-sm font-bold text-grey-700 flex h-11 min-h-11 line-clamp-2">
-									{list.title}
-								</h3>
+	const [summaryList, setSummaryList] = useState([]);
+	const [listLoaded, setListLoaded] = useState(false);
+	useEffect(() => {
+		if (!listLoaded) {
+			setAxios.get("/api/summaries").then((apiResp) => {
+				setSummaryList(apiResp.data);
+				setListLoaded(true);
+			});
+		}
+	}, []);
 
-								<p className="text-[12px] line-clamp-4 text-gray-600">
-									<ReactMarkdown>{list.summary}</ReactMarkdown>
-								</p>
-							</Link>
-						</li>
-					);
-				})}
-			</ul>
-			{/* <ListPagination curr_page={currPage} total={totalPage} /> */}
-		</section>
+	return (
+		<>
+			{!listLoaded && (
+				<div className="flex gap-x-2">
+					<SkeletonCard />
+					<SkeletonCard />
+					<SkeletonCard />
+				</div>
+			)}
+			{listLoaded && (
+				<section className="w-full flex flex-col items-center justify-center mt-16">
+					<h2 className="text-2xl font-bold">Interview Summaries</h2>
+					<ul className="flex gap-4 p-4 px-0 w-full max-w-7xl flex-wrap items-center justify-center mt-4">
+						{summaryList.map((list, idx) => {
+							return (
+								<li
+									className="p-6 rounded-md overflow-clip bg-gradient-to-br to-amber-50 via-rose-50 from-white items-between w-64 max-w-64 h-44 max-h-44 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]"
+									key={"IS-" + idx}
+								>
+									<Link
+										className=" h-full w-full flex flex-col gap-y-2"
+										href={"/admin/summaries/" + list?.id}
+									>
+										<h3 className="text-sm font-bold text-grey-700 flex h-11 min-h-11 line-clamp-2">
+											{list?.title}
+										</h3>
+
+										<p className="text-[12px] line-clamp-4 text-gray-600">
+											<ReactMarkdown>{list?.summary}</ReactMarkdown>
+										</p>
+									</Link>
+								</li>
+							);
+						})}
+					</ul>
+					{/* <ListPagination curr_page={currPage} total={totalPage} /> */}
+				</section>
+			)}
+		</>
 	);
 }
