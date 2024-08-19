@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/breadcrumb";
 function BreadcrumbWithCustomSeparator() {
 	return (
-		<Breadcrumb className="z-50">
+		<Breadcrumb>
 			<BreadcrumbList>
 				<BreadcrumbItem>
 					<BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -35,7 +35,7 @@ function BreadcrumbWithCustomSeparator() {
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<>
-			<nav className="sticky top-0 flex w-full items-center justify-between border-slate-100 border-b p-1 bg-slate-50">
+			<nav className="sticky top-0 flex w-full items-center justify-between border-slate-100 border-b p-1 bg-slate-50 z-50">
 				<BreadcrumbWithCustomSeparator />
 				<NavigationMenu>
 					<NavigationMenuList>
