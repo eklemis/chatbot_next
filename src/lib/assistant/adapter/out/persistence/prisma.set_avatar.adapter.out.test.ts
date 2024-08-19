@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { PrismaSetAvatarAdapter } from "./prisma.set_avatar.adapter.out"; // Update with the correct path
-import prisma from "../../../../singletons/db_prisma_client"; // Update with the correct path
+import { PrismaSetAvatarAdapter } from "./prisma.set_avatar.adapter.out";
+import prisma from "../../../../singletons/db_prisma_client";
 
 // Mock the prisma client
 vi.mock("../../../../singletons/db_prisma_client", () => ({

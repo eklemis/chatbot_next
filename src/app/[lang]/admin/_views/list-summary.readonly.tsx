@@ -11,14 +11,14 @@ import {
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import setAxios from "@/lib/singletons/axios";
-import { useState, useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import useSWR from "swr";
 import { SkeletonCard } from "@/components/compounded/skeleton-card";
 
 interface PagingParams {
 	curr_page: number;
 	total: number;
 }
+
 export function ListPagination({ curr_page, total }: PagingParams) {
 	const PER_PAGE = 10;
 	return (
@@ -49,11 +49,13 @@ export function ListPagination({ curr_page, total }: PagingParams) {
 		</Pagination>
 	);
 }
+
 interface Params {
 	dictionary: any;
 	currPage: number;
 	totalPage: number;
 }
+
 interface Summary {
 	id: string;
 	assistantId: string;
@@ -61,57 +63,61 @@ interface Summary {
 	title: string;
 	summary: string;
 }
+
 export function SummaryList({ dictionary, currPage, totalPage }: Params) {
 	const dict = dictionary.dictionary;
-	const [summaryList, setSummaryList] = useState([]);
-	const [listLoaded, setListLoaded] = useState(false);
-	useEffect(() => {
-		if (!listLoaded) {
-			setAxios.get("/api/summaries").then((apiResp) => {
-				setSummaryList(apiResp.data);
-				setListLoaded(true);
-			});
-		}
-	}, []);
+
+	// Fetcher function for useSWR
+	const fetcher = (url: string) => setAxios.get(url).then((res) => res.data);
+
+	// Use useSWR to fetch the summary list
+	const { data: summaryList, error } = useSWR<Summary[]>(
+		"/api/summaries",
+		fetcher
+	);
+
+	// Handle loading state
+	if (!summaryList && !error) {
+		return (
+			<div className="flex gap-x-2">
+				<SkeletonCard />
+				<SkeletonCard />
+				<SkeletonCard />
+			</div>
+		);
+	}
+
+	// Handle error state (optional)
+	if (error) {
+		return <div>Error loading summaries</div>;
+	}
 
 	return (
-		<>
-			{!listLoaded && (
-				<div className="flex gap-x-2">
-					<SkeletonCard />
-					<SkeletonCard />
-					<SkeletonCard />
-				</div>
-			)}
-			{listLoaded && (
-				<section className="w-full flex flex-col items-center justify-center mt-16">
-					<h2 className="text-2xl font-bold">Interview Summaries</h2>
-					<ul className="flex gap-4 p-4 px-0 w-full max-w-7xl flex-wrap items-center justify-center mt-4">
-						{summaryList.map((list: Summary, idx) => {
-							return (
-								<li
-									className="p-6 rounded-md overflow-clip bg-gradient-to-br to-amber-50 via-rose-50 from-white items-between w-64 max-w-64 h-44 max-h-44 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]"
-									key={"IS-" + idx}
-								>
-									<Link
-										className=" h-full w-full flex flex-col gap-y-2"
-										href={"/admin/summaries/" + list.id}
-									>
-										<h3 className="text-sm font-bold text-grey-700 flex h-11 min-h-11 line-clamp-2">
-											{list?.title}
-										</h3>
-
-										<p className="text-[12px] line-clamp-4 text-gray-600">
-											<ReactMarkdown>{list.summary}</ReactMarkdown>
-										</p>
-									</Link>
-								</li>
-							);
-						})}
-					</ul>
-					{/* <ListPagination curr_page={currPage} total={totalPage} /> */}
-				</section>
-			)}
-		</>
+		<section className="w-full flex flex-col items-center justify-center mt-16">
+			<h2 className="text-2xl font-bold">Interview Summaries</h2>
+			<ul className="flex gap-4 p-4 px-0 w-full max-w-7xl flex-wrap items-center justify-center mt-4">
+				{summaryList?.map((list: Summary, idx) => {
+					return (
+						<li
+							className="p-6 rounded-md overflow-clip bg-gradient-to-br to-amber-50 via-rose-50 from-white items-between w-64 max-w-64 h-44 max-h-44 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]"
+							key={"IS-" + idx}
+						>
+							<Link
+								className="h-full w-full flex flex-col gap-y-2"
+								href={"/admin/summaries/" + list.id}
+							>
+								<h3 className="text-sm font-bold text-grey-700 flex h-11 min-h-11 line-clamp-2">
+									{list?.title}
+								</h3>
+								<p className="text-[12px] line-clamp-4 text-gray-600">
+									<ReactMarkdown>{list.summary}</ReactMarkdown>
+								</p>
+							</Link>
+						</li>
+					);
+				})}
+			</ul>
+			{/* <ListPagination curr_page={currPage} total={totalPage} /> */}
+		</section>
 	);
 }

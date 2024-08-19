@@ -49,6 +49,10 @@ export default async function Page({ params }: { params: { lang: string } }) {
 					<ul className="flex flex-col gap-y-1">
 						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
 							<Circle className="min-w-5 min-h-5 w-5 h-5 text-gray-500" />
+							Resume/stop an active running chat from an Assistants
+						</li>
+						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
+							<Circle className="min-w-5 min-h-5 w-5 h-5 text-gray-500" />
 							Delete Assistants
 						</li>
 						<li className="flex items-start gap-x-1 p-2 rounded bg-slate-200 text-sm px-4">
