@@ -54,13 +54,14 @@ export function AssistantList(dictionary: any) {
 	const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 	// Use useSWR to fetch the assistants
-	const { data: assistants, error } = useSWR<Assistant[]>(
-		"/api/assistants",
-		fetcher
-	);
+	const {
+		data: assistants,
+		isLoading,
+		error,
+	} = useSWR<Assistant[]>("/api/assistants", fetcher);
 
 	// Handle loading state
-	if (!assistants && !error) {
+	if (isLoading) {
 		return (
 			<div className="flex gap-x-2">
 				<SkeletonCard />

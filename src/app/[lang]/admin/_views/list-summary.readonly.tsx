@@ -71,13 +71,14 @@ export function SummaryList({ dictionary, currPage, totalPage }: Params) {
 	const fetcher = (url: string) => setAxios.get(url).then((res) => res.data);
 
 	// Use useSWR to fetch the summary list
-	const { data: summaryList, error } = useSWR<Summary[]>(
-		"/api/summaries",
-		fetcher
-	);
+	const {
+		data: summaryList,
+		isLoading,
+		error,
+	} = useSWR<Summary[]>("/api/summaries", fetcher);
 
 	// Handle loading state
-	if (!summaryList && !error) {
+	if (isLoading) {
 		return (
 			<div className="flex gap-x-2">
 				<SkeletonCard />
