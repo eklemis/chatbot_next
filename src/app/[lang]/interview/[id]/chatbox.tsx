@@ -37,12 +37,20 @@ export function Chatbox({ assistantId, interviewId }: Params) {
 		}
 	}, [messageInitiated]);
 
+	function clearUserMessage() {
+		// Reset user message and assistant message
+		setUserMessage({
+			role: "user",
+			content: "",
+		});
+	}
 	async function sendMessage(interview_id: string, message: string) {
 		try {
 			setMessages((prevMessages) => [
 				...prevMessages,
 				{ role: "user", content: message }, // Add the user's message
 			]);
+			clearUserMessage();
 			// First, send the message to the API
 			const response = await setAxios.post(
 				`/api/message/${assistantId}/${interview_id}`,
@@ -50,11 +58,6 @@ export function Chatbox({ assistantId, interviewId }: Params) {
 					message: message,
 				}
 			);
-			// Reset user message and assistant message
-			setUserMessage({
-				role: "user",
-				content: "",
-			});
 			// Check if the request was successful
 			if (response.status === 200) {
 				// If successful, set up the EventSource to receive the streamed response
@@ -97,7 +100,6 @@ export function Chatbox({ assistantId, interviewId }: Params) {
 	const [showSaveForm, setShowSaveForm] = useState(false);
 	const [summaryContent, setSummaryContent] = useState("");
 	function saveHandler(content: string) {
-		//console.log("Save handler called:", content);
 		setSummaryContent(content);
 		setShowSaveForm(true);
 	}

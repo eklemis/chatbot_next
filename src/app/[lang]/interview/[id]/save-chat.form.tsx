@@ -61,13 +61,25 @@ export function SaveChatForm({
 	});
 	async function onSubmit(data: z.infer<typeof formSchema>) {
 		setIsSaving(true);
-		const serverResponse = await setAxios.post("/api/interview", data);
-		console.log("Server response:", serverResponse);
-		setIsSaving(false);
-		toast({
-			description: "Your summary has been saved.",
-		});
-		onCancel();
+		setAxios
+			.post("/api/summaries", data)
+			.then((resp) => {
+				console.log("Server response:", resp);
+				setIsSaving(false);
+				toast({
+					description: "Your summary has been saved.",
+				});
+				onCancel();
+			})
+			.catch((err) => {
+				console.error("Error on saving:", err);
+				setIsSaving(false);
+				toast({
+					variant: "destructive",
+					title: "Save failed! Something went wrong.",
+					description: "There was a problem with the database.",
+				});
+			});
 	}
 	return (
 		<Form {...form}>

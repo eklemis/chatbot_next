@@ -31,7 +31,7 @@ export function ChatList({ chatList, lastReply, onSave }: Params) {
 		}
 	}, [chatList.length, lastReply.length]);
 	return (
-		<ul className="flex flex-col p-4 gap-y-4 w-full h-full max-w-[1000px] pb-10 max-h-[calc(100vh-216px)] overflow-y-scroll bg-slate-50 scroll-m-0 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+		<ul className="flex flex-col p-4 gap-y-4 w-full h-full max-w-[1000px] pb-10 max-h-[calc(100vh-216px)] overflow-y-scroll">
 			{chatList.map((chat, index) => {
 				if (chat.role === "assistant") {
 					return (
