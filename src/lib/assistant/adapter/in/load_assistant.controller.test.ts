@@ -17,6 +17,7 @@ vi.mock("../../../../config/load_assistant.config", () => ({
 }));
 
 // Import the mocked module
+// Will import from the mocked version above
 import { LoadAssistantConfig } from "../../../../config/load_assistant.config";
 
 describe("LoadAssistantController", () => {
