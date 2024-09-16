@@ -22,7 +22,7 @@ export class PrismaSetAvatarAdapter implements SetAvatarPort {
 
 			return true;
 		} catch (error) {
-			console.error("Error inserting or updating avatar:", error);
+			console.error("Failed set avatar: ", error);
 			return false; // Return false if there is an error
 		}
 	}

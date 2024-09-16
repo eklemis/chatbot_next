@@ -38,7 +38,9 @@ describe("PrismaSetAvatarAdapter", () => {
 
 	it("should return false when upsert fails", async () => {
 		const mockUpsert = vi.mocked(prisma.assistantInfo.upsert);
-		mockUpsert.mockRejectedValue(new Error("Database error"));
+		mockUpsert.mockImplementation(() => {
+			throw new Error("Database error");
+		});
 
 		const consoleErrorSpy = vi
 			.spyOn(console, "error")

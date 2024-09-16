@@ -1,30 +1,32 @@
-import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { LoadAssistantController } from "./load_assistant.controller";
 import { LoadAssistantQuery } from "../../application/port/in/load_assistant.query";
-import { LoadAssistantConfig } from "@/config/load_assistant.config";
 
-// Mock the LoadAssistantQuery
-const mockLoadAssistantQuery: LoadAssistantQuery = {
-	loadAssistant: vi.fn(),
-	getName: vi.fn(),
-	getDescription: vi.fn(),
-	getInstruction: vi.fn(),
-	getModel: vi.fn(),
-	getId: vi.fn(),
-};
-
-// Mock the LoadAssistantConfig to return the mocked LoadAssistantQuery
-vi.mock("@/config/load_assistant.config", () => ({
+// Mock the LoadAssistantConfig
+vi.mock("../../../../config/load_assistant.config", () => ({
 	LoadAssistantConfig: {
-		loadAssistantQuery: mockLoadAssistantQuery,
+		loadAssistantQuery: {
+			loadAssistant: vi.fn(),
+			getName: vi.fn(),
+			getDescription: vi.fn(),
+			getInstruction: vi.fn(),
+			getModel: vi.fn(),
+			getId: vi.fn(),
+		},
 	},
 }));
 
+// Import the mocked module
+import { LoadAssistantConfig } from "../../../../config/load_assistant.config";
+
 describe("LoadAssistantController", () => {
 	let controller: LoadAssistantController;
+	let mockLoadAssistantQuery: LoadAssistantQuery;
 
 	beforeEach(() => {
 		controller = new LoadAssistantController();
+		mockLoadAssistantQuery = LoadAssistantConfig.loadAssistantQuery;
+		vi.clearAllMocks();
 	});
 
 	it("should call loadAssistant with the correct id", async () => {
@@ -35,13 +37,13 @@ describe("LoadAssistantController", () => {
 
 	it("should return the correct assistant name", () => {
 		const name = "Test Assistant";
-		(mockLoadAssistantQuery.getName as Mock).mockReturnValue(name);
+		vi.mocked(mockLoadAssistantQuery.getName).mockReturnValue(name);
 		expect(controller.getAssistantName()).toBe(name);
 	});
 
 	it("should return the correct assistant description", () => {
 		const description = "Test Description";
-		(mockLoadAssistantQuery.getDescription as Mock).mockReturnValue(
+		vi.mocked(mockLoadAssistantQuery.getDescription).mockReturnValue(
 			description
 		);
 		expect(controller.getAssistantDescription()).toBe(description);
@@ -49,7 +51,7 @@ describe("LoadAssistantController", () => {
 
 	it("should return the correct assistant instruction", () => {
 		const instruction = "Test Instruction";
-		(mockLoadAssistantQuery.getInstruction as Mock).mockReturnValue(
+		vi.mocked(mockLoadAssistantQuery.getInstruction).mockReturnValue(
 			instruction
 		);
 		expect(controller.getAssistantInstruction()).toBe(instruction);
@@ -57,7 +59,7 @@ describe("LoadAssistantController", () => {
 
 	it("should return the correct model", () => {
 		const model = "Test Model";
-		(mockLoadAssistantQuery.getModel as Mock).mockReturnValue(model);
+		vi.mocked(mockLoadAssistantQuery.getModel).mockReturnValue(model);
 		expect(controller.getModel()).toBe(model);
 	});
 });
